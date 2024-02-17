@@ -3,6 +3,9 @@ package com.capella.cronjob.impl;
 import com.capella.cronjob.CronJob;
 import com.capella.domain.enums.CronJobStatus;
 import com.capella.domain.model.cronjoblog.CronJobLogModel;
+import com.capella.domain.model.currency.CurrencyModel;
+import com.capella.domain.model.exchangerate.ExchangeRateModel;
+import com.capella.service.exception.model.ModelNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +30,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ExchangeRateCronJob extends CronJob {
     public final static String CRONJOB_NAME = "exchange_rate_recorder";
+    public final static String TURKISH_LIRA_CODE = "TRY";
+    public final static String TURKISH_LIRA = "Türk Lirası";
 
     @Value("${tcmb.exchange.rate.xml}")
     private String exchangeRateXml;
@@ -85,6 +90,19 @@ public class ExchangeRateCronJob extends CronJob {
                 var bankNoteSelling = element.getElementsByTagName("BanknoteSelling").item(0).getTextContent();
                 var crossRateUsd = element.getElementsByTagName("CrossRateUSD").item(0).getTextContent();
 
+
+                CurrencyModel currencyModel;
+                try{
+                    currencyModel = currencyService.getCurrencyModel(TURKISH_LIRA_CODE);
+                }catch (ModelNotFoundException e){
+                    currencyModel = modelService.create(CurrencyModel.class);
+                    currencyModel.setCode(TURKISH_LIRA_CODE);
+                    currencyModel.setShortText(TURKISH_LIRA);
+                    currencyModel.setLongText(TURKISH_LIRA);
+                    currencyModel.setSearchText(TURKISH_LIRA);
+                }
+
+                ExchangeRateModel exchangeRateModel;
 
             }
         }

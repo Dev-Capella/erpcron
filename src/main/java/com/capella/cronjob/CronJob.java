@@ -6,6 +6,7 @@ import com.capella.domain.model.cronjob.CronJobModel;
 import com.capella.domain.model.cronjoblog.CronJobLogModel;
 import com.capella.security.constant.AuthorizationConstants;
 import com.capella.service.cronjob.CronJobService;
+import com.capella.service.currency.CurrencyService;
 import com.capella.service.model.ModelService;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,8 @@ public class CronJob implements Runnable{
     protected CronJobService cronJobService;
     @Autowired
     protected ModelService modelService;
+    @Autowired
+    protected CurrencyService currencyService;
 
     @Getter
     @Setter
