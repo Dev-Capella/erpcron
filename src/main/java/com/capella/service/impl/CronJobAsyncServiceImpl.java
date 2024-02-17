@@ -17,10 +17,10 @@ public class CronJobAsyncServiceImpl implements CronJobAsyncService {
     @Async
     public void run(String code, CronJob cronJob) {
         if(Objects.nonNull(cronJob)){
-            log.info(code + "---------> periyodik görev tetiklendi.");
+            log.info(code + "---------> cron job tetiklendi.");
             cronJob.run();
         }else{
-            log.info(code + " periyodik görev tetiklenemedi çünkü periyodik görev bulunamadı.");
+            log.info(code + " cron job tetiklenemedi çünkü cron job bulunamadı.");
         }
     }
 }
